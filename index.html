@@ -2,192 +2,91 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>airBaltic Virtual Airline PTFS</title>
+  <title>airBaltic Virtual Airline – Fan Replica</title>
   <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: #f0f2f5;
-      color: #152649;
+    :root {
+      --green: #CDDA32;
+      --blue: #152649;
+      --hover: #10c850;
     }
-    header {
-      background-color: #CDDA32;
-      color: #152649;
-      text-align: center;
-      padding-bottom: 20px;
+    body{margin:0;font-family:sans-serif;color:var(--blue);background:#f5f6f7;}
+    header{background:var(--green);padding:10px;text-align:center;}
+    header img.logo{height:50px;margin:10px;}
+    nav{background:var(--blue);padding:10px;text-align:center;}
+    nav a{color:var(--green);margin:0 15px;text-decoration:none;font-weight:600;cursor:pointer;}
+    .hero{background:#fff;padding:60px 20px;text-align:center;box-shadow:0 2px 5px rgba(0,0,0,0.1);}
+    .hero h1{margin:0;font-size:2em;}
+    .search-panel{margin:30px auto;max-width:600px;display:flex;gap:10px;}
+    .search-panel input, .search-panel button {
+      flex:1;padding:12px;border-radius:4px;font-size:1em;border:1px solid var(--blue);
     }
-    header img.logo {
-      height: 60px;
-      margin: 20px 0;
+    .search-panel button{
+      background:var(--blue);color:var(--green);border:none;
     }
-    header .banner {
-      width: 100%;
-      max-height: 300px;
-      object-fit: cover;
-    }
-    nav {
-      background: #152649;
-      padding: 15px;
-      text-align: center;
-    }
-    nav a {
-      color: #CDDA32;
-      margin: 0 20px;
-      text-decoration: none;
-      font-size: 1.1em;
-      cursor: pointer;
-    }
-    section {
-      padding: 40px;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-    #booking .flights {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    .flight {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      flex: 1 1 250px;
-      cursor: pointer;
-      transition: 0.4s ease;
-      text-align: center;
-    }
-    .flight:hover {
-      transform: scale(1.03);
-    }
-    .flight.selected {
-      transform: scale(1.1);
-      border: 3px solid #00ADEF;
-      z-index: 2;
-    }
-    form {
-      margin-top: 30px;
-      display: none;
-      flex-direction: column;
-      gap: 15px;
-    }
-    input {
-      padding: 10px;
-      font-size: 1em;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-    button {
-      padding: 12px;
-      border: none;
-      border-radius: 5px;
-      background: #152649;
-      color: #CDDA32;
-      font-size: 1em;
-      cursor: pointer;
-    }
-    .confirm {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      right: 0; bottom: 0;
-      background: rgba(0,0,0,0.6);
-      align-items: center;
-      justify-content: center;
-      z-index: 999;
-    }
-    .confirm div {
-      background: #fff;
-      padding: 30px;
-      border-radius: 10px;
-      text-align: center;
-      max-width: 400px;
-    }
-    .confirm img {
-      max-width: 100%;
-      border-radius: 8px;
-      margin-bottom: 15px;
-    }
+    #booking {padding:50px 20px;text-align:center;}
+    .flights{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;}
+    .flight{width:200px;background:#fff;padding:20px;border-radius:8px;cursor:pointer;transition:0.4s;box-shadow:0 1px 4px rgba(0,0,0,0.1);}
+    .flight.selected{border:3px solid var(--green);transform:scale(1.05);z-index:2;}
+    form{display:none;margin-top:30px;flex-direction:column;gap:15px;max-width:300px;margin-left:auto;margin-right:auto;}
+    input{padding:10px;font-size:1em;border:1px solid #ccc;border-radius:4px;width:100%;}
+    button.book{background:var(--blue);color:var(--green);padding:12px;border:none;border-radius:4px;font-size:1em;cursor:pointer;}
+    .confirm{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);align-items:center;justify-content:center;}
+    .confirm div{background:white;padding:30px;border-radius:8px;text-align:center;max-width:400px;}
+    .confirm img{max-width:100%;border-radius:4px;margin-bottom:15px;}
   </style>
 </head>
 <body>
-
-<header>
-  <img class="logo" src="https://www.airbaltic.com/galleries/2020/logos/airbaltic-on-green-illuminator.svg" alt="airBaltic logo">
-  <img class="banner" src="https://thumbs.dreamstime.com/b/airbaltic-landing-amsterdam-airport-airbus-ams-sky-244921990.jpg" alt="airBaltic plane banner">
-</header>
-
-<nav>
-  <a id="booktab">Booking</a>
-</nav>
-
-<section>
-  <h2>Welcome to airBaltic Virtual Airline (PTFS)</h2>
-  <p>Fly virtually with the official airBaltic PTFS airline. Book flights, join our events, and experience realistic pilot training.</p>
-</section>
-
-<section id="booking">
-  <h2>Book Your Flight</h2>
-  <div class="flights">
-    <div class="flight" data-route="Greater Rockford">
-      <h3>Greater Rockford</h3>
-      <p>RIX ➜ Rockford</p>
+  <header>
+    <img class="logo" src="https://cdn.airhex.com/logos/airbaltic-logo.svg" alt="airBaltic Logo">
+  </header>
+  <nav><a id="scrollBooking">Booking</a></nav>
+  <section class="hero">
+    <h1>Welcome to airBaltic Virtual Airline</h1>
+    <div class="search-panel">
+      <input type="text" placeholder="From: RIX">
+      <input type="text" placeholder="To: Select Destination">
+      <button>Select</button>
     </div>
-    <div class="flight" data-route="Perth">
-      <h3>Perth</h3>
-      <p>RIX ➜ Perth</p>
+  </section>
+  <section id="booking">
+    <h2>Select Your Routed Flight</h2>
+    <div class="flights">
+      <div class="flight" data-route="Greater Rockford"><h3>Rockford</h3><p>RIX ➜ Greater Rockford</p></div>
+      <div class="flight" data-route="Perth"><h3>Perth</h3><p>RIX ➜ Perth</p></div>
+      <div class="flight" data-route="Tokyo International"><h3>Tokyo Int’l</h3><p>RIX ➜ Tokyo International</p></div>
     </div>
-    <div class="flight" data-route="Tokyo International">
-      <h3>Tokyo International</h3>
-      <p>RIX ➜ Tokyo</p>
+    <form id="bookForm">
+      <input type="text" id="roblox" placeholder="Roblox Username" required>
+      <input type="text" id="discord" placeholder="Discord Username" required>
+      <button type="submit" class="book">Confirm Booking</button>
+    </form>
+  </section>
+  <div class="confirm" id="confModal">
+    <div>
+      <img src="https://tse1.mm.bing.net/th/id/OIP.iVf_RHjTg3GQxvPIPzZItAHaE7?rs=1&pid=ImgDetMain&amp;o=7&amp;rm=3" alt="Confirmation">
+      <h2>Booking Confirmed!</h2>
+      <p>Route: <strong id="routeOut"></strong></p>
+      <p>Your seat is assigned automatically.</p>
+      <p>Please screenshot this and use it as confirmation.</p>
     </div>
   </div>
-  <form id="bookform">
-    <input type="text" id="roblox" placeholder="Roblox Username" required>
-    <input type="text" id="discord" placeholder="Discord Username" required>
-    <button type="submit">Book Flight</button>
-  </form>
-</section>
-
-<div class="confirm" id="conf">
-  <div>
-    <img src="https://tse1.mm.bing.net/th/id/OIP.iVf_RHjTg3GQxvPIPzZItAHaE7?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Confirmation Plane">
-    <h2>Successfully Booked!</h2>
-    <p>Your route: <strong><span id="routechosen"></span></strong></p>
-    <p>Seat has been automatically assigned. Please screenshot this confirmation.</p>
-  </div>
-</div>
-
 <script>
-  document.getElementById('booktab').onclick = () => {
-    document.getElementById('booking').scrollIntoView({behavior: 'smooth'});
-  };
-
-  let selected = null;
-  const flights = document.querySelectorAll('.flight');
-  const form = document.getElementById('bookform');
-
-  flights.forEach(f => {
-    f.onclick = () => {
-      flights.forEach(o => o.classList.remove('selected'));
-      f.classList.add('selected');
-      selected = f;
-      form.style.display = 'flex';
+  document.getElementById('scrollBooking').onclick = () => document.getElementById('booking').scrollIntoView({behavior:'smooth'});
+  let sel=null, flights=document.querySelectorAll('.flight');
+  flights.forEach(f=>{
+    f.onclick=()=>{
+      flights.forEach(o=>o.classList.remove('selected'));
+      f.classList.add('selected'); sel=f;
+      document.getElementById('bookForm').style.display='flex';
     };
   });
-
-  form.onsubmit = (e) => {
+  document.getElementById('bookForm').onsubmit = e=>{
     e.preventDefault();
-    if (!selected) return;
-    document.getElementById('routechosen').innerText = selected.dataset.route;
-    document.getElementById('conf').style.display = 'flex';
+    if(!sel) return;
+    document.getElementById('routeOut').innerText = sel.dataset.route;
+    document.getElementById('confModal').style.display = 'flex';
   };
-
-  document.getElementById('conf').onclick = () => {
-    document.getElementById('conf').style.display = 'none';
-  };
+  document.getElementById('confModal').onclick = ()=>{document.getElementById('confModal').style.display='none';};
 </script>
-
 </body>
 </html>
