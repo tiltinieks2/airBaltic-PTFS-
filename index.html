@@ -1,115 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>airBaltic Virtual Airline | PTFS</title>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>airBaltic Virtual Airline PTFS</title>
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      color: #222;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f2f5;
+      color: #152649;
     }
     header {
-      background-color: #00ADEF;
-      color: white;
-      padding: 20px 40px;
+      background-color: #CDDA32;
+      color: #152649;
       text-align: center;
+      padding-bottom: 20px;
+    }
+    header img.logo {
+      height: 60px;
+      margin: 20px 0;
+    }
+    header .banner {
+      width: 100%;
+      max-height: 300px;
+      object-fit: cover;
     }
     nav {
-      background-color: #007FB0;
-      padding: 10px;
+      background: #152649;
+      padding: 15px;
       text-align: center;
     }
     nav a {
-      color: white;
-      margin: 0 15px;
+      color: #CDDA32;
+      margin: 0 20px;
       text-decoration: none;
-      font-weight: bold;
+      font-size: 1.1em;
+      cursor: pointer;
     }
     section {
-      padding: 30px 40px;
+      padding: 40px;
+      max-width: 900px;
+      margin: 0 auto;
     }
-    .fleet, .routes {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    #booking .flights {
+      display: flex;
       gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
     }
-    .card {
+    .flight {
       background: white;
-      padding: 15px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    footer {
-      background-color: #00ADEF;
-      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      flex: 1 1 250px;
+      cursor: pointer;
+      transition: 0.4s ease;
       text-align: center;
-      padding: 15px;
+    }
+    .flight:hover {
+      transform: scale(1.03);
+    }
+    .flight.selected {
+      transform: scale(1.1);
+      border: 3px solid #00ADEF;
+      z-index: 2;
+    }
+    form {
+      margin-top: 30px;
+      display: none;
+      flex-direction: column;
+      gap: 15px;
+    }
+    input {
+      padding: 10px;
+      font-size: 1em;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      padding: 12px;
+      border: none;
+      border-radius: 5px;
+      background: #152649;
+      color: #CDDA32;
+      font-size: 1em;
+      cursor: pointer;
+    }
+    .confirm {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      right: 0; bottom: 0;
+      background: rgba(0,0,0,0.6);
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+    .confirm div {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+      max-width: 400px;
+    }
+    .confirm img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-bottom: 15px;
     }
   </style>
 </head>
 <body>
 
 <header>
-  <h1>airBaltic Virtual Airline</h1>
-  <p>Official PTFS Virtual Airline</p>
+  <img class="logo" src="https://www.airbaltic.com/galleries/2020/logos/airbaltic-on-green-illuminator.svg" alt="airBaltic logo">
+  <img class="banner" src="https://thumbs.dreamstime.com/b/airbaltic-landing-amsterdam-airport-airbus-ams-sky-244921990.jpg" alt="airBaltic plane banner">
 </header>
 
 <nav>
-  <a href="#about">About</a>
-  <a href="#fleet">Fleet</a>
-  <a href="#routes">Routes</a>
-  <a href="#join">Join Us</a>
+  <a id="booktab">Booking</a>
 </nav>
 
-<section id="about">
-  <h2>About Us</h2>
-  <p>Welcome to airBaltic VA! We're a Roblox PTFS virtual airline based on the real airBaltic. We simulate real-world flight operations and provide a fun, realistic flying experience in PTFS. Join our active community of pilots today.</p>
+<section>
+  <h2>Welcome to airBaltic Virtual Airline (PTFS)</h2>
+  <p>Fly virtually with the official airBaltic PTFS airline. Book flights, join our events, and experience realistic pilot training.</p>
 </section>
 
-<section id="fleet">
-  <h2>Our Fleet</h2>
-  <div class="fleet">
-    <div class="card">
-      <h3>Airbus A220-300</h3>
-      <p>Main aircraft for short/medium-haul routes. Sleek and modern!</p>
+<section id="booking">
+  <h2>Book Your Flight</h2>
+  <div class="flights">
+    <div class="flight" data-route="Greater Rockford">
+      <h3>Greater Rockford</h3>
+      <p>RIX ➜ Rockford</p>
     </div>
-    <div class="card">
-      <h3>Bombardier Dash 8 Q400</h3>
-      <p>Perfect for regional flights. Used for short island hops.</p>
+    <div class="flight" data-route="Perth">
+      <h3>Perth</h3>
+      <p>RIX ➜ Perth</p>
+    </div>
+    <div class="flight" data-route="Tokyo International">
+      <h3>Tokyo International</h3>
+      <p>RIX ➜ Tokyo</p>
     </div>
   </div>
+  <form id="bookform">
+    <input type="text" id="roblox" placeholder="Roblox Username" required>
+    <input type="text" id="discord" placeholder="Discord Username" required>
+    <button type="submit">Book Flight</button>
+  </form>
 </section>
 
-<section id="routes">
-  <h2>Our Routes</h2>
-  <div class="routes">
-    <div class="card">
-      <h3>Riga (RIX) ➜ London (LHR)</h3>
-      <p>Duration: ~2 hrs</p>
-    </div>
-    <div class="card">
-      <h3>Riga (RIX) ➜ Tallinn (TLL)</h3>
-      <p>Duration: ~45 min</p>
-    </div>
-    <div class="card">
-      <h3>Riga (RIX) ➜ Helsinki (HEL)</h3>
-      <p>Duration: ~1 hr</p>
-    </div>
+<div class="confirm" id="conf">
+  <div>
+    <img src="https://tse1.mm.bing.net/th/id/OIP.iVf_RHjTg3GQxvPIPzZItAHaE7?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Confirmation Plane">
+    <h2>Successfully Booked!</h2>
+    <p>Your route: <strong><span id="routechosen"></span></strong></p>
+    <p>Seat has been automatically assigned. Please screenshot this confirmation.</p>
   </div>
-</section>
+</div>
 
-<section id="join">
-  <h2>Join Our Airline</h2>
-  <p>We are currently recruiting pilots and staff! Click the link below to apply or join our Discord server.</p>
-  <p><a href="https://discord.gg/YOURSERVERLINK" target="_blank">➡️ Join our Discord</a></p>
-</section>
+<script>
+  document.getElementById('booktab').onclick = () => {
+    document.getElementById('booking').scrollIntoView({behavior: 'smooth'});
+  };
 
-<footer>
-  <p>© 2025 airBaltic Virtual Airline | PTFS Community Project</p>
-</footer>
+  let selected = null;
+  const flights = document.querySelectorAll('.flight');
+  const form = document.getElementById('bookform');
+
+  flights.forEach(f => {
+    f.onclick = () => {
+      flights.forEach(o => o.classList.remove('selected'));
+      f.classList.add('selected');
+      selected = f;
+      form.style.display = 'flex';
+    };
+  });
+
+  form.onsubmit = (e) => {
+    e.preventDefault();
+    if (!selected) return;
+    document.getElementById('routechosen').innerText = selected.dataset.route;
+    document.getElementById('conf').style.display = 'flex';
+  };
+
+  document.getElementById('conf').onclick = () => {
+    document.getElementById('conf').style.display = 'none';
+  };
+</script>
 
 </body>
 </html>
